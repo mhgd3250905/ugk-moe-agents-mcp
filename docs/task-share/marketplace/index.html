@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="UGK Task Marketplace shares installable automation taskbooks for the UGK agent.">
+<title data-i18n="title.home">UGK Task Marketplace</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="marketplace-page">
+<svg class="icon-sprite" aria-hidden="true"><symbol id="icon-task" viewBox="0 0 24 24"><path d="M6 4h8l4 4v12H6zM14 4v5h5M9 12h6M9 16h4"/></symbol><symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/></symbol><symbol id="icon-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></symbol><symbol id="icon-bookmark" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4V3Z"/></symbol><symbol id="icon-copy" viewBox="0 0 24 24"><path d="M8 8h11v13H8zM5 16H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v1"/></symbol><symbol id="icon-flag" viewBox="0 0 24 24"><path d="M5 21V4m0 0h12l-1.5 4L17 12H5"/></symbol></svg>
+
+<nav class="nav"><div class="shell"><div class="nav-inner">
+  <a class="nav-mobile-brand" href="../" aria-label="UGK"><span>UGK</span><em>Task</em></a>
+  <span class="nav-stat-tag"><span data-i18n="nav.collectedPrefix">Collected</span> <strong data-marketplace-stat="tasks">0</strong> <span data-i18n="nav.collectedSuffix">Tasks</span></span>
+  <button class="nav-menu-toggle" type="button" data-nav-toggle aria-expanded="false" data-i18n-aria-label="nav.menu" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="#catalog" data-i18n="nav.marketplace">Marketplace</a>
+    <a href="../upload/" data-i18n="nav.upload">Upload</a>
+    <a href="../account/" data-i18n="nav.account">Account</a>
+    <a href="../admin/" data-i18n="nav.admin">Admin</a>
+    <div class="nav-menu-actions">
+      <span data-theme-switcher></span>
+      <span data-language-switcher></span>
+      <a class="btn btn-primary" href="/api/auth/github" data-auth-link data-i18n="nav.signIn">Sign in</a>
+    </div>
+  </div>
+  <div class="nav-actions">
+    <span class="chip" data-user>Guest</span>
+    <span data-theme-switcher></span>
+    <span data-language-switcher></span>
+    <a class="btn btn-primary" href="/api/auth/github" data-auth-link data-i18n="nav.signIn">Sign in</a>
+  </div>
+</div></div></nav>
+
+<main class="shell">
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="hero-logo" aria-hidden="true">
+        <span class="hero-logo-line"><span class="logo-u">█   █</span> <span class="logo-g"> ███ </span> <span class="logo-k">█  █</span></span>
+        <span class="hero-logo-line"><span class="logo-u">█   █</span> <span class="logo-g">█    </span> <span class="logo-k">█ █ </span></span>
+        <span class="hero-logo-line"><span class="logo-u">█   █</span> <span class="logo-g">█  ██</span> <span class="logo-k">██  </span></span>
+        <span class="hero-logo-line"><span class="logo-u">█   █</span> <span class="logo-g">█   █</span> <span class="logo-k">█ █ </span></span>
+        <span class="hero-logo-line"><span class="logo-u"> ███ </span> <span class="logo-g"> ███ </span> <span class="logo-k">█  █</span></span>
+      </span>
+      <h1 class="hero-title" data-i18n="hero.title">Task Marketplace</h1>
+      <p class="hero-subtitle" data-i18n="hero.subtitle">Automated agents, shared tasks.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#catalog" data-i18n="hero.browse">Browse tasks</a>
+        <a class="btn btn-secondary" href="../upload/" data-i18n="hero.submit">Submit a task</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalog">
+    <div class="toolbar">
+      <input class="search" name="q" data-search data-i18n-aria-label="filters.searchLabel" data-i18n-placeholder="filters.search" aria-label="Search tasks" placeholder="Search tasks...">
+      <select class="search" name="category" data-category-filter data-i18n-aria-label="filters.categoryLabel" aria-label="Filter category"><option value="" data-i18n="filters.all">All</option></select>
+      <select class="search" name="sort" data-sort data-i18n-aria-label="filters.sortLabel" aria-label="Sort"><option value="name" data-i18n="filters.name">Name</option><option value="downloads" data-i18n="filters.downloads">Downloads</option><option value="likes" data-i18n="filters.likes">Likes</option><option value="newest" data-i18n="filters.newest">Newest</option></select>
+      <span class="search-status" data-search-status aria-live="polite"></span>
+    </div>
+    <div class="catalog" data-catalog><p class="empty" data-i18n="catalog.loading">Loading tasks...</p></div>
+  </section>
+
+  <section class="community" style="display:none"></section>
+</main>
+
+<footer class="footer"><div class="shell"><div class="footer-inner">
+  <span><span data-i18n="footer.product">Product</span> UGK</span>
+  <span><span data-i18n="footer.author">Author</span> bboyUglyk</span>
+  <a href="mailto:ug1yk@foxmail.com"><span data-i18n="footer.contact">Contact</span> ug1yk@foxmail.com</a>
+</div></div></footer>
+
+<script src="../i18n.js"></script>
+<script>
+function tr(key,vars){return window.UGKI18N?.t(key,vars)||key}
+function applyTaskData(name,data){for(const [key,value]of Object.entries(data)){document.querySelectorAll('[data-count="'+name+':'+key+'"]').forEach(n=>{n.textContent=value;const b=n.closest('button.metric');if(b){const label=b.dataset.action==='like'?tr('card.like'):b.dataset.action==='favorite'?tr('card.save'):'';if(label)b.setAttribute('aria-label',label+': '+value)}})}document.querySelectorAll('[data-action="like"][data-task="'+name+'"]').forEach(b=>{if('liked'in data){b.dataset.active=String(data.liked);b.setAttribute('aria-pressed',String(data.liked))}});document.querySelectorAll('[data-action="favorite"][data-task="'+name+'"]').forEach(b=>{if('favorited'in data){b.dataset.active=String(data.favorited);b.setAttribute('aria-pressed',String(data.favorited))}})}
+function applyMarketplaceStats(data){for(const [key,value]of Object.entries(data)){document.querySelectorAll('[data-marketplace-stat="'+key+'"]').forEach(n=>{n.textContent=value})}}
+function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function safeHref(value){const url=String(value??'');if(/^https?:\/\//i.test(url))return esc(url);if(/^\/api\/submissions\/[0-9]+\/artifact$/i.test(url))return esc(url);return '#'}
+function titleize(name){return name.split("-").map(p=>p?p[0].toUpperCase()+p.slice(1):p).join(" ")}
+const previewTasks=[
+  {name:'repo-auditor',title:'Repo Auditor',description:'Review a repository, find risky code paths, and return a compact fix list.',author:'bboyUglyk',category:'Review',downloads:1248,likes:326,favorites:88,tags:['review','audit']},
+  {name:'browser-check',title:'Browser Check',description:'Open a local page, inspect layout states, and report exact visual regressions.',author:'UGK',category:'QA',downloads:892,likes:211,favorites:73,tags:['browser','qa']},
+  {name:'release-notes',title:'Release Notes',description:'Turn commits into concise release notes with user-facing wording and upgrade notes.',author:'Community',category:'Writing',downloads:516,likes:147,favorites:42,tags:['docs','release']}
+]
+function isCardPreview(){return (location.protocol==='file:'||['127.0.0.1','localhost'].includes(location.hostname))&&new URLSearchParams(location.search).get('preview')==='cards'}
+function catalogEmptyHTML(type){
+  const state=type==='fail'
+    ? {title:tr('catalog.failTitle'),text:tr('catalog.failText'),action:''}
+    : {title:tr('catalog.emptyTitle'),text:tr('catalog.emptyText'),action:'<a class="btn btn-secondary" href="../upload/">'+tr('catalog.emptyAction')+'</a>'};
+  return '<div class="catalog-empty" data-empty-state="'+type+'"><img src="../assets/empty-taskbook.png" alt="" loading="lazy"><h2>'+state.title+'</h2><p>'+state.text+'</p>'+state.action+'</div>'
+}
+function fitSelectWidths(){const canvas=fitSelectWidths.canvas||(fitSelectWidths.canvas=document.createElement('canvas'));const ctx=canvas.getContext('2d');document.querySelectorAll('select.search').forEach(select=>{const style=getComputedStyle(select);ctx.font=style.font;const widest=[...select.options].reduce((max,opt)=>Math.max(max,ctx.measureText(opt.textContent.trim()).width),0);select.style.width=Math.min(220,Math.max(74,Math.ceil(widest+50)))+'px'})}
+function showToast(message,type='info'){let box=document.querySelector('[data-toast]');if(!box){box=document.createElement('div');box.className='toast';box.dataset.toast='';box.setAttribute('role','status');box.setAttribute('aria-live','polite');document.body.appendChild(box)}box.textContent=message;box.dataset.type=type;box.dataset.show='true';clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>{box.dataset.show='false'},3200)}
+function authErrorMessage(data){return data?.error==='GitHub OAuth is not configured'?tr('toast.authMissing'):(data?.error||tr('toast.authFailed'))}
+async function startGithubAuth(){try{const r=await fetch('/api/auth/github',{redirect:'manual',headers:{accept:'application/json'}});if(r.type==='opaqueredirect'||(r.status>=300&&r.status<400)){location.href='/api/auth/github';return}const text=await r.text();let data;try{data=JSON.parse(text)}catch{data=null}if(!r.ok){showToast(authErrorMessage(data),'error');return}location.href='/api/auth/github'}catch{showToast(tr('toast.authFailed'),'error')}}
+function bindAuthLinks(){document.addEventListener('click',event=>{const link=event.target.closest('a[href="/api/auth/github"]');if(!link)return;event.preventDefault();startGithubAuth()})}
+async function copyText(button){try{await navigator.clipboard.writeText(button.dataset.copy);const textNode=button.childNodes[button.childNodes.length-1];button.dataset.copied='true';button.title=tr('card.copied');if(textNode)textNode.textContent=tr('card.copied');showToast(tr('toast.installCopied'));setTimeout(()=>{button.dataset.copied='false';button.title=button.getAttribute('aria-label')||tr('card.copy');if(textNode)textNode.textContent=tr('card.copy')},1400)}catch{showToast(tr('toast.copyFailed'),'error')}}
+function askReportReason(task){return new Promise(resolve=>{let dialog=document.querySelector('[data-report-dialog]');if(!dialog){dialog=document.createElement('dialog');dialog.className='ugk-dialog';dialog.dataset.reportDialog='';dialog.innerHTML='<form class="dialog-card" data-report-form><h2 data-report-title></h2><p data-report-text></p><textarea data-report-reason required maxlength="500"></textarea><div class="dialog-actions"><button class="btn btn-secondary" type="button" data-report-cancel></button><button class="btn btn-primary" type="submit" data-report-send></button></div></form>';document.body.appendChild(dialog);dialog.querySelector('[data-report-cancel]').addEventListener('click',()=>dialog.close('cancel'));dialog.querySelector('[data-report-form]').addEventListener('submit',event=>{event.preventDefault();const reason=dialog.querySelector('[data-report-reason]').value.trim();if(!reason){showToast(tr('report.reasonRequired'),'error');return}dialog.close('submit')})}dialog.querySelector('[data-report-title]').textContent=tr('report.title',{task});dialog.querySelector('[data-report-text]').textContent=tr('report.text');dialog.querySelector('[data-report-reason]').placeholder=tr('report.placeholder');dialog.querySelector('[data-report-cancel]').textContent=tr('report.cancel');dialog.querySelector('[data-report-send]').textContent=tr('report.send');dialog.querySelector('[data-report-reason]').value='';dialog.addEventListener('close',function onClose(){dialog.removeEventListener('close',onClose);const reason=dialog.returnValue==='submit'?dialog.querySelector('[data-report-reason]').value.trim():'';resolve(reason||null)});dialog.showModal();dialog.querySelector('[data-report-reason]').focus()})}
+
+// Render a task card from manifest/community data, preserving data-attribute contracts
+function taskCardHTML(t){
+  const name=esc(t.name), title=esc(t.title||titleize(t.name)), desc=esc(t.description||''), author=esc(t.author||'Community');
+  const install='ugk task install '+t.name;
+  const cat=t.category||t.tags?.[0]||'task';
+  const metrics=[
+    '<span class="metric metric-download" aria-label="'+tr('card.downloads')+': '+Number(t.downloads??0)+'"><svg class="metric-icon" focusable="false" aria-hidden="true"><use href="#icon-download"></use></svg><b data-count="'+name+':downloads">'+Number(t.downloads??0)+'</b></span>',
+    '<button class="metric metric-like" type="button" data-action="like" data-active="false" aria-pressed="false" aria-label="'+tr('card.like')+': '+Number(t.likes??0)+'" title="'+tr('card.like')+'" data-task="'+name+'" data-api="/api/tasks/'+name+'/like"><svg class="metric-icon" focusable="false" aria-hidden="true"><use href="#icon-heart"></use></svg><b data-count="'+name+':likes">'+Number(t.likes??0)+'</b></button>',
+    '<button class="metric metric-save" type="button" data-action="favorite" data-active="false" aria-pressed="false" aria-label="'+tr('card.save')+': '+Number(t.favorites??0)+'" title="'+tr('card.save')+'" data-task="'+name+'" data-api="/api/tasks/'+name+'/favorite"><svg class="metric-icon" focusable="false" aria-hidden="true"><use href="#icon-bookmark"></use></svg><b data-count="'+name+':favorites">'+Number(t.favorites??0)+'</b></button>'
+  ].join('');
+  const actions=t.downloadUrl?'<a class="btn btn-secondary btn-download" href="'+safeHref(t.downloadUrl)+'" data-download-api="/api/tasks/'+name+'/download" data-task="'+name+'" download aria-label="'+tr('card.downloadZip')+'" title="'+tr('card.downloadZip')+'"><svg class="icon" focusable="false" aria-hidden="true"><use href="#icon-download"></use></svg>'+tr('card.downloadZip')+'</a>':'';
+  return '<article class="task-card" data-task-card data-task="'+name+'" data-category="'+esc(cat)+'" data-downloads="'+Number(t.downloads??0)+'" data-likes="'+Number(t.likes??0)+'" data-favorites="'+Number(t.favorites??0)+'" data-newest="'+Number(t.newest??0)+'" data-search="'+esc((t.name+' '+(t.title||'')+' '+(t.description||'')+' '+((t.tags||[]).join(' '))).toLowerCase())+'">'
+    +'<div class="card-head"><div class="chips"><span class="chip">'+esc(cat)+'</span><span class="chip">@'+author+'</span></div><span class="task-glyph"><svg class="icon" focusable="false" aria-hidden="true"><use href="#icon-task"></use></svg></span></div>'
+    +'<h2>'+title+'</h2>'
+    +'<p class="desc">'+desc+'</p>'
+    +'<div class="install-row"><code class="command">'+esc(install)+'</code><button class="btn btn-primary" type="button" data-copy="'+esc(install)+'" aria-label="'+tr('card.copyInstall')+'" title="'+tr('card.copyInstall')+'"><svg class="icon" focusable="false" aria-hidden="true"><use href="#icon-copy"></use></svg>'+tr('card.copy')+'</button></div>'
+    +'<div class="card-foot"><div class="metric-row">'+metrics+'</div>'+actions+'</div></article>';
+}
+function renderCatalogTasks(root,catFilter,tasks){
+  const cats=[...new Set(tasks.map(t=>t.category||t.tags?.[0]||'task'))].sort();
+  const cur=catFilter?.value||'';if(catFilter){catFilter.innerHTML='<option value="">'+tr('filters.all')+'</option>'+cats.map(c=>'<option value="'+esc(c)+'"'+(c===cur?' selected':'')+'>'+esc(c)+'</option>').join('');fitSelectWidths()}
+  root.innerHTML=tasks.map((t,i)=>taskCardHTML({...t,newest:1000-i})).join('');
+  bindCards();
+}
+
+async function refreshSession(){try{const r=await fetch('/api/session');const s=await r.json();document.querySelectorAll('[data-user]').forEach(n=>{n.textContent=s.user?('@'+s.user.login):tr('nav.guest')});document.body.dataset.signedIn=s.user?'true':'false';return s}catch{document.querySelectorAll('[data-user]').forEach(n=>{n.textContent=tr('nav.guest')});return{user:null}}}
+async function refreshMarketplaceStats(){try{const r=await fetch('/api/stats');if(r.ok)applyMarketplaceStats(await r.json())}catch{}}
+
+// Pull official tasks from manifest and render cards dynamically
+async function refreshCatalog(){
+  const root=document.querySelector('[data-catalog]');if(!root)return;
+  const catFilter=document.querySelector('[data-category-filter]');
+  if(isCardPreview()){renderCatalogTasks(root,catFilter,previewTasks);applyMarketplaceStats({tasks:previewTasks.length});filterTasks();return}
+  try{
+    const r=await fetch('/api/manifest');if(!r.ok){root.innerHTML=catalogEmptyHTML('fail');return}
+    const manifest=await r.json();const tasks=manifest.tasks||[];
+    if(!tasks.length){root.innerHTML=catalogEmptyHTML('empty');return}
+    renderCatalogTasks(root,catFilter,tasks);
+    await refreshStats();
+  }catch{root.innerHTML=catalogEmptyHTML('fail')}
+}
+
+function bindCards(){
+  document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',()=>copyText(button)));
+  document.querySelectorAll('[data-action]').forEach(button=>button.addEventListener('click',()=>postAction(button)));
+  document.querySelectorAll('[data-download-api]').forEach(link=>link.addEventListener('click',()=>{fetch(link.dataset.downloadApi,{method:'POST',keepalive:true}).then(r=>r.ok?r.json():null).then(data=>{if(data)applyTaskData(link.dataset.task,data);refreshMarketplaceStats()}).catch(()=>{})}));
+}
+
+function matchesSearch(text,terms){const words=text.split(/[^a-z0-9]+/).filter(Boolean);return !terms.length||terms.every(term=>words.some(word=>word.startsWith(term)))}
+function filterTasks(){const terms=(document.querySelector('[data-search]')?.value||'').toLowerCase().trim().split(/\s+/).filter(Boolean);const category=document.querySelector('[data-category-filter]')?.value||'';const sort=document.querySelector('[data-sort]')?.value||'name';const catalog=document.querySelector('[data-catalog]');const cards=[...document.querySelectorAll('[data-task-card]')];let visible=0;cards.forEach(card=>{const matchesText=matchesSearch(card.dataset.search||'',terms);const matchesCategory=!category||card.dataset.category===category;card.hidden=!(matchesText&&matchesCategory);if(!card.hidden)visible++});cards.sort((a,b)=>{if(sort==='downloads'||sort==='likes')return Number(b.dataset[sort]||0)-Number(a.dataset[sort]||0);if(sort==='newest')return Number(b.dataset.newest||0)-Number(a.dataset.newest||0);return a.querySelector('h2').textContent.localeCompare(b.querySelector('h2').textContent)}).forEach(card=>catalog?.appendChild(card));if(catalog){catalog.dataset.empty=cards.length&&!visible?'true':'false';catalog.dataset.emptyMessage=tr('catalog.noMatches')}document.querySelector('[data-search-status]').textContent=cards.length?visible+'/'+cards.length:''}
+async function refreshStats(){const names=[...new Set([...document.querySelectorAll('[data-count]')].map(n=>(n.dataset.count||'').split(':')[0]).filter(Boolean))];await Promise.all(names.map(async name=>{try{const r=await fetch('/api/tasks/'+encodeURIComponent(name)+'/stats');if(r.ok){const data=await r.json();applyTaskData(name,data);document.querySelectorAll('[data-task-card][data-task="'+name+'"]').forEach(card=>{for(const key of ['downloads','likes','favorites'])if(key in data)card.dataset[key]=data[key]})}}catch{}}));filterTasks()}
+function rows(items,empty){return items.length?items.map(t=>'<div class="submission-row"><strong>'+esc(t.title||t.name)+'</strong><span class="chip">'+esc(t.status||t.name)+'</span><span>'+esc(t.description||'')+'</span></div>').join(''):'<p class="notice">'+empty+'</p>'}
+async function refreshAccount(session){const root=document.querySelector('[data-account-page]');if(!root)return;if(!session.user){root.innerHTML='<p class="notice">'+tr('account.signInText')+'</p>';return}const [fav,subs,downs]=await Promise.all([fetch('/api/account/favorites'),fetch('/api/account/submissions'),fetch('/api/account/downloads')]);if(!fav.ok||!subs.ok||!downs.ok){root.innerHTML='<p class="notice">'+tr('account.unavailable')+'</p>';return}const f=await fav.json();const s=await subs.json();const d=await downs.json();root.innerHTML='<h2>@'+esc(session.user.login)+'</h2><div class="split"><div><h3>'+tr('account.favorites')+'</h3>'+rows(f.favorites||[],tr('account.noFavorites'))+'<h3>'+tr('account.downloads')+'</h3>'+rows(d.downloads||[],tr('account.noDownloads'))+'</div><div><h3>'+tr('account.submissions')+'</h3>'+rows(s.submissions||[],tr('account.noSubmissions'))+'</div></div>'}
+async function refreshDetailMeta(){const root=document.querySelector('[data-detail-meta]');if(!root)return;const name=root.dataset.task;try{const [detail,versions]=await Promise.all([fetch('/api/tasks/'+encodeURIComponent(name)+'/stats-detail'),fetch('/api/tasks/'+encodeURIComponent(name)+'/versions')]);const d=detail.ok?await detail.json():{days:[]};const v=versions.ok?await versions.json():{versions:[]};root.innerHTML='<h2>'+tr('detail.versions')+'</h2>'+(v.versions.length?v.versions.map(item=>'<div class="kv"><span>'+esc(item.version)+'</span><span>'+esc(item.created_at||'published')+'</span></div>').join(''):'<p class="notice">'+tr('detail.officialVersion')+'</p>')+'<h2>'+tr('detail.downloadTrend')+'</h2>'+(d.days.length?d.days.map(day=>'<div class="kv"><span>'+esc(day.day)+'</span><span>'+tr('detail.downloadCount',{count:Number(day.downloads||0)})+'</span></div>').join(''):'<p class="notice">'+tr('detail.noDownloads')+'</p>')}catch{}}
+async function submitUpload(form){const result=document.querySelector('[data-upload-result]');if(result)result.textContent=tr('upload.submitting');const r=await fetch('/api/tasks/submit',{method:'POST',body:new FormData(form)});if(r.status===401){startGithubAuth();return}const data=await r.json().catch(()=>({error:'submit_failed'}));if(result)result.textContent=r.ok?tr('upload.submitSuccess',{name:data.name||'',version:data.version?' v'+data.version:''}):tr('upload.submitFailed',{error:data.error||r.status});if(r.ok)form.reset()}
+async function refreshAdmin(){const root=document.querySelector('[data-admin-page]');if(!root)return;const [queue,reports]=await Promise.all([fetch('/api/admin/submissions'),fetch('/api/admin/reports')]);if(queue.status===401||reports.status===401){root.innerHTML='<p class="notice">'+tr('admin.signInText')+'</p>';return}if(queue.status===403||reports.status===403){root.innerHTML='<p class="notice">'+tr('admin.notAdmin')+'</p>';return}if(!queue.ok||!reports.ok){root.innerHTML='<p class="notice">'+tr('admin.unavailable')+'</p>';return}const data=await queue.json();const reportData=await reports.json();const items=data.submissions||[];const reportRows=(reportData.reports||[]).map(r=>'<div class="submission-row"><strong>'+esc(r.task_name)+'</strong><span>@'+esc(r.reporter_login||'user')+'</span><p>'+esc(r.reason)+'</p></div>').join('')||'<p class="notice">'+tr('admin.noReports')+'</p>';root.innerHTML='<h2>'+tr('admin.submissions')+'</h2>'+(items.length?items.map(t=>'<div class="submission-row"><strong>'+esc(t.title)+'</strong><span>'+esc(t.name)+' by @'+esc(t.author_login||'user')+'</span><p>'+esc(t.description)+'</p><div class="submission-actions"><button class="btn btn-primary" data-review-id="'+t.id+'" data-review-status="published">'+tr('admin.publish')+'</button><button class="btn btn-secondary" data-review-id="'+t.id+'" data-review-status="rejected">'+tr('admin.reject')+'</button></div></div>').join(''):'<p class="notice">'+tr('admin.noPending')+'</p>')+'<h2>'+tr('admin.reports')+'</h2>'+reportRows}
+async function postAction(button){const url=button.dataset.api;if(!url)return;const action=button.dataset.action;const init={method:'POST'};if(action==='report'){if(document.body.dataset.signedIn!=='true'){startGithubAuth();return}const reason=await askReportReason(button.dataset.task||'task');if(!reason)return;init.headers={'content-type':'application/json'};init.body=JSON.stringify({reason})}button.dataset.busy='true';try{const r=await fetch(url,init);if(r.status===401){startGithubAuth();return}const data=await r.json().catch(()=>({}));if(!r.ok){showToast(data.error||tr('toast.actionFailed'),'error');return}if(action==='report'){button.dataset.active='true';button.setAttribute('aria-pressed','true');showToast(tr('toast.reportSent'));return}applyTaskData(button.dataset.task,data);showToast(action==='like'?tr('toast.likeUpdated'):tr('toast.saveUpdated'))}catch{showToast(tr('toast.actionFailed'),'error')}finally{button.dataset.busy='false'}}
+document.querySelectorAll('[data-upload-form]').forEach(form=>form.addEventListener('submit',event=>{event.preventDefault();submitUpload(form)}));
+document.addEventListener('click',async event=>{const button=event.target.closest('[data-review-id]');if(!button)return;button.disabled=true;await fetch('/api/admin/submissions/'+button.dataset.reviewId,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({status:button.dataset.reviewStatus})});refreshAdmin()});
+fitSelectWidths();document.querySelectorAll('[data-search],[data-sort],[data-category-filter]').forEach(control=>{control.addEventListener('input',filterTasks);control.addEventListener('change',filterTasks)});
+window.addEventListener('ugk:i18n',()=>{refreshSession().then(refreshAccount);refreshCatalog();refreshDetailMeta();refreshAdmin()});
+bindAuthLinks();refreshSession().then(refreshAccount);refreshMarketplaceStats();refreshCatalog();refreshDetailMeta();refreshAdmin();
+</script>
+</body>
+</html>

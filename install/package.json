@@ -1,0 +1,18 @@
+{
+  "name": "ugk-install",
+  "version": "0.1.0",
+  "description": "ugk 一键交互式安装器:检测环境→装 ugk→引导配置 DeepSeek API key",
+  "type": "module",
+  "bin": {
+    "ugk-install": "bin/install.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "ugk",
+    "installer",
+    "cli"
+  ],
+  "license": "MIT"
+}

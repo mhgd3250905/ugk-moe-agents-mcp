@@ -1,0 +1,13 @@
+name = "ugk-task-share"
+compatibility_date = "2026-06-30"
+pages_build_output_dir = "docs/task-share"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ugk-task-share-db"
+database_id = "dee8e538-4c56-40b2-82fc-ad581926ffd7"
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "TASK_UPLOADS"
+bucket_name = "ugk-task-uploads"

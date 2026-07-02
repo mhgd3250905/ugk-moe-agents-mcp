@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="UGK 是面向普通用户的 AI 自动化工具，用一句话让电脑执行重复任务，并可直接使用 Task 市场里的现成自动化。">
+<title>UGK - 用一句话完成电脑任务</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="marketplace-page product-home">
+<nav class="nav"><div class="shell"><div class="nav-inner">
+  <a class="nav-mobile-brand" href="./" aria-label="UGK"><span>UGK</span><em>Agent</em></a>
+  <span class="nav-stat-tag">Task 市场已上线</span>
+  <button class="nav-menu-toggle" type="button" data-nav-toggle aria-expanded="false" data-i18n-aria-label="nav.menu" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="#install">怎么安装</a>
+    <a href="#jobs">能做什么</a>
+    <a href="marketplace/">Task 市场</a>
+    <a href="#faq">FAQ</a>
+    <div class="nav-menu-actions">
+      <span data-theme-switcher></span>
+      <a class="btn btn-primary" href="marketplace/">浏览 Task</a>
+    </div>
+  </div>
+  <div class="nav-actions">
+    <span data-theme-switcher></span>
+    <a class="btn btn-primary" href="marketplace/">浏览 Task</a>
+  </div>
+</div></div></nav>
+
+<main>
+  <section class="product-hero shell">
+    <div class="product-hero-copy">
+      <div class="kicker">UGK Agent</div>
+      <h1 class="product-logo-title"><img class="product-pixel-logo" src="assets/ugk-pixel-logo.svg" alt="UGK"></h1>
+      <p class="hero-claim">不用会编程，也能让电脑替你跑任务</p>
+      <p>从整理资料、批量处理文件，到打开网页检查信息。UGK 把“怎么操作”交给 AI，把“要不要执行”留给你。</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#install">安装 UGK</a>
+        <a class="btn btn-secondary" href="marketplace/">浏览 Task 市场</a>
+      </div>
+      <div class="product-proof">
+        <span>本地优先</span>
+        <span>关键动作确认</span>
+        <span>现成 Task 可安装</span>
+      </div>
+    </div>
+    <div class="product-app-shot">
+      <img src="assets/ugk-console-screenshot.png" alt="UGK 终端产品界面，展示入门提示、模块状态、模型和工作区信息">
+    </div>
+  </section>
+
+  <section id="install" class="product-section install-guide shell">
+    <div class="section-head">
+      <div class="kicker">Install</div>
+      <h2>两种安装方式</h2>
+      <p>新手用安装器，熟悉 npm 的用户可以直接全局安装。</p>
+    </div>
+    <div class="install-grid">
+      <article class="install-card install-card-primary">
+        <span>推荐</span>
+        <h3>一键安装器</h3>
+        <p>自动检测 Node/npm，安装 UGK，并引导配置 DeepSeek API key。</p>
+        <code>npx ugk-install</code>
+      </article>
+      <article class="install-card">
+        <span>npm</span>
+        <h3>手动安装</h3>
+        <p>已安装 Node.js 18+ 时，直接全局安装后运行。</p>
+        <code>npm i -g ugk-agent</code>
+        <code>ugk</code>
+      </article>
+    </div>
+  </section>
+
+  <section class="product-section marketplace-showcase shell">
+    <div class="market-showcase-head">
+      <div>
+      <div class="kicker">Marketplace</div>
+        <h2>先从可用 Task 开始</h2>
+        <p>每张卡片就是一个能安装的自动化任务。看到合适的，进市场看详情。</p>
+      </div>
+      <a class="btn btn-primary" href="marketplace/">浏览 Task 市场</a>
+    </div>
+    <div class="task-marquee" aria-label="可用 Task 示例">
+      <div class="task-marquee-row">
+        <div class="task-marquee-track">
+          <div class="task-marquee-group">
+            <article class="task-preview-card tone-video"><span>video</span><h3>视频字幕配音合并</h3><p>把视频转写、字幕和配音产物整理到一个结果包。</p></article>
+            <article class="task-preview-card tone-research"><span>research</span><h3>LinkedIn Search</h3><p>按关键词检索资料，整理候选结果和链接。</p></article>
+            <article class="task-preview-card tone-review"><span>review</span><h3>Repo Auditor</h3><p>检查仓库风险路径，输出紧凑的修复清单。</p></article>
+          </div>
+          <div class="task-marquee-group" aria-hidden="true">
+            <article class="task-preview-card tone-video"><span>video</span><h3>视频字幕配音合并</h3><p>把视频转写、字幕和配音产物整理到一个结果包。</p></article>
+            <article class="task-preview-card tone-research"><span>research</span><h3>LinkedIn Search</h3><p>按关键词检索资料，整理候选结果和链接。</p></article>
+            <article class="task-preview-card tone-review"><span>review</span><h3>Repo Auditor</h3><p>检查仓库风险路径，输出紧凑的修复清单。</p></article>
+          </div>
+        </div>
+      </div>
+      <div class="task-marquee-row task-marquee-row-alt">
+        <div class="task-marquee-track">
+          <div class="task-marquee-group">
+            <article class="task-preview-card tone-tts"><span>tts</span><h3>字幕配音 (mimo-TTS)</h3><p>根据字幕生成配音素材，适合短视频批量处理。</p></article>
+            <article class="task-preview-card tone-qa"><span>qa</span><h3>Browser Check</h3><p>打开本地页面，检查布局状态和视觉回归。</p></article>
+            <article class="task-preview-card tone-writing"><span>writing</span><h3>Release Notes</h3><p>把提交记录整理成面向用户的发布说明。</p></article>
+          </div>
+          <div class="task-marquee-group" aria-hidden="true">
+            <article class="task-preview-card tone-tts"><span>tts</span><h3>字幕配音 (mimo-TTS)</h3><p>根据字幕生成配音素材，适合短视频批量处理。</p></article>
+            <article class="task-preview-card tone-qa"><span>qa</span><h3>Browser Check</h3><p>打开本地页面，检查布局状态和视觉回归。</p></article>
+            <article class="task-preview-card tone-writing"><span>writing</span><h3>Release Notes</h3><p>把提交记录整理成面向用户的发布说明。</p></article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="jobs" class="product-section shell">
+    <div class="section-head">
+      <div class="kicker">Jobs to be done</div>
+      <h2>把具体麻烦事交出去</h2>
+      <p>官网不用堆技术名词，直接告诉用户哪些日常工作可以少动手。</p>
+    </div>
+    <div class="task-bento">
+      <article class="wide"><h3>整理和归档</h3><p>文件命名混乱、资料散落、下载夹爆炸时，让 UGK 按你的规则收拾。</p></article>
+      <article><h3>网页检查</h3><p>打开网页、对比内容、截图记录。</p></article>
+      <article><h3>批量处理</h3><p>重复下载、转换、复制、移动。</p></article>
+      <article><h3>报告生成</h3><p>把执行结果整理成清单或文档。</p></article>
+      <article class="wide"><h3>复用别人做好的流程</h3><p>从市场安装 Task，先跑通，再按自己的工作方式调整。</p></article>
+    </div>
+  </section>
+
+  <section class="product-section shell">
+    <div class="section-head">
+      <div class="kicker">Capabilities</div>
+      <h2>看起来简单，底下要可靠</h2>
+    </div>
+    <div class="concept-grid">
+      <article><span>Context</span><h3>理解你的文件和网页</h3><p>围绕当前任务读取必要上下文，不靠你反复解释。</p></article>
+      <article><span>Tools</span><h3>用工具完成真实动作</h3><p>浏览器、文件、命令和 Task 能连接起来执行。</p></article>
+      <article><span>Control</span><h3>关键步骤由你确认</h3><p>授权、发布、敏感操作保留明确确认。</p></article>
+    </div>
+  </section>
+
+  <section id="faq" class="product-section shell">
+    <div class="section-head">
+      <div class="kicker">FAQ</div>
+      <h2>常见问题</h2>
+    </div>
+    <div class="faq-list">
+      <details open><summary>我不会写代码，可以用吗？</summary><p>可以。你可以先从 Task 市场安装现成任务，再用自然语言描述要处理的内容。</p></details>
+      <details><summary>Task 市场是什么？</summary><p>它是 UGK 的自动化任务库，里面的 Task 可以安装到本地 UGK 使用。</p></details>
+      <details><summary>它会直接替我乱点吗？</summary><p>不会。涉及登录、发布、授权等关键动作时，流程会保留确认。</p></details>
+    </div>
+  </section>
+
+  <section class="product-cta shell">
+    <div>
+      <div class="kicker">Start with one task</div>
+      <h2>先找一个你今天就想少做的重复任务</h2>
+    </div>
+    <a class="btn btn-primary" href="marketplace/">打开 Task 市场</a>
+  </section>
+</main>
+
+<footer class="footer"><div class="shell"><div class="footer-inner">
+  <span>Product UGK</span>
+  <span>Author bboyUglyk</span>
+  <a href="mailto:ug1yk@foxmail.com">Contact ug1yk@foxmail.com</a>
+</div></div></footer>
+
+<script src="i18n.js"></script>
+<script>document.documentElement.lang='zh-CN';window.addEventListener('ugk:theme',()=>{document.documentElement.lang='zh-CN'});</script>
+</body>
+</html>

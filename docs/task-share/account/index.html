@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="View your UGK Task Marketplace favorites, downloads, and submissions.">
+<title data-i18n="title.account">Account | UGK Tasks</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="marketplace-page">
+<svg class="icon-sprite" aria-hidden="true"><symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/></symbol><symbol id="icon-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></symbol><symbol id="icon-bookmark" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4V3Z"/></symbol><symbol id="icon-copy" viewBox="0 0 24 24"><path d="M8 8h11v13H8zM5 16H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v1"/></symbol><symbol id="icon-flag" viewBox="0 0 24 24"><path d="M5 21V4m0 0h12l-1.5 4L17 12H5"/></symbol></svg>
+
+<nav class="nav"><div class="shell"><div class="nav-inner">
+  <a class="nav-mobile-brand" href="../" aria-label="UGK Task Marketplace"><span>UGK</span><em>Task</em></a>
+  <button class="nav-menu-toggle" type="button" data-nav-toggle aria-expanded="false" data-i18n-aria-label="nav.menu" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="../marketplace/" data-i18n="nav.marketplace">Marketplace</a>
+    <a href="../upload/" data-i18n="nav.upload">Upload</a>
+    <a href="../account/" data-i18n="nav.account">Account</a>
+    <a href="../admin/" data-i18n="nav.admin">Admin</a>
+    <div class="nav-menu-actions">
+      <span data-theme-switcher></span>
+      <span data-language-switcher></span>
+      <a class="btn btn-primary" href="/api/auth/github" data-auth-link data-i18n="nav.signIn">Sign in</a>
+    </div>
+  </div>
+  <div class="nav-actions">
+    <span class="chip" data-user>Guest</span>
+    <span data-theme-switcher></span>
+    <span data-language-switcher></span>
+    <a class="btn btn-primary" href="/api/auth/github" data-auth-link data-i18n="nav.signIn">Sign in</a>
+  </div>
+</div></div></nav>
+
+<main class="shell shell-mid">
+  <div class="page-head">
+    <div class="kicker" data-i18n="account.kicker">Your account</div>
+    <h1 data-i18n="account.title">Account</h1>
+    <p class="lede" data-i18n="account.lede">Your favorite tasks, downloads, and submissions.</p>
+  </div>
+  <section class="panel" data-account-page><p class="notice" data-i18n="account.loading">Loading account...</p></section>
+</main>
+
+<footer class="footer"><div class="shell"><div class="footer-inner">
+  <span><span data-i18n="footer.product">Product</span> UGK</span>
+  <span><span data-i18n="footer.author">Author</span> bboyUglyk</span>
+  <a href="mailto:ug1yk@foxmail.com"><span data-i18n="footer.contact">Contact</span> ug1yk@foxmail.com</a>
+</div></div></footer>
+
+<script src="../i18n.js"></script>
+<script>
+function tr(key,vars){return window.UGKI18N?.t(key,vars)||key}
+function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function rows(items,empty){return items.length?items.map(t=>'<div class="submission-row"><strong>'+esc(t.title||t.name)+'</strong><span class="chip">'+esc(t.status||t.name)+'</span><span>'+esc(t.description||'')+'</span></div>').join(''):'<p class="notice">'+empty+'</p>'}
+function showToast(message,type='info'){let box=document.querySelector('[data-toast]');if(!box){box=document.createElement('div');box.className='toast';box.dataset.toast='';box.setAttribute('role','status');box.setAttribute('aria-live','polite');document.body.appendChild(box)}box.textContent=message;box.dataset.type=type;box.dataset.show='true';clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>{box.dataset.show='false'},3200)}
+function authErrorMessage(data){return data?.error==='GitHub OAuth is not configured'?tr('toast.authMissing'):(data?.error||tr('toast.authFailed'))}
+async function startGithubAuth(){try{const r=await fetch('/api/auth/github',{redirect:'manual',headers:{accept:'application/json'}});if(r.type==='opaqueredirect'||(r.status>=300&&r.status<400)){location.href='/api/auth/github';return}const text=await r.text();let data;try{data=JSON.parse(text)}catch{data=null}if(!r.ok){showToast(authErrorMessage(data),'error');return}location.href='/api/auth/github'}catch{showToast(tr('toast.authFailed'),'error')}}
+function bindAuthLinks(){document.addEventListener('click',event=>{const link=event.target.closest('a[href="/api/auth/github"]');if(!link)return;event.preventDefault();startGithubAuth()})}
+async function refreshSession(){try{const r=await fetch('/api/session');const s=await r.json();document.querySelectorAll('[data-user]').forEach(n=>{n.textContent=s.user?('@'+s.user.login):tr('nav.guest')});document.body.dataset.signedIn=s.user?'true':'false';return s}catch{document.querySelectorAll('[data-user]').forEach(n=>{n.textContent=tr('nav.guest')});return{user:null}}}
+async function refreshAccount(session){const root=document.querySelector('[data-account-page]');if(!root)return;if(!session.user){root.innerHTML='<div class="empty-state"><h2>'+tr('account.signInTitle')+'</h2><p>'+tr('account.signInText')+'</p><a class="btn btn-primary" href="/api/auth/github">'+tr('account.signInAction')+'</a></div>';return}const [fav,subs,downs]=await Promise.all([fetch('/api/account/favorites'),fetch('/api/account/submissions'),fetch('/api/account/downloads')]);if(!fav.ok||!subs.ok||!downs.ok){root.innerHTML='<p class="notice">'+tr('account.unavailable')+'</p>';return}const f=await fav.json();const s=await subs.json();const d=await downs.json();root.innerHTML='<h2>@'+esc(session.user.login)+'</h2><div class="split"><div><h3>'+tr('account.favorites')+'</h3>'+rows(f.favorites||[],tr('account.noFavorites'))+'<h3>'+tr('account.downloads')+'</h3>'+rows(d.downloads||[],tr('account.noDownloads'))+'</div><div><h3>'+tr('account.submissions')+'</h3>'+rows(s.submissions||[],tr('account.noSubmissions'))+'</div></div>'}
+bindAuthLinks();
+refreshSession().then(refreshAccount);
+window.addEventListener('ugk:i18n',()=>refreshSession().then(refreshAccount));
+</script>
+</body>
+</html>

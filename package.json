@@ -1,0 +1,45 @@
+{
+  "name": "ugk-agent",
+  "version": "2.3.0",
+  "description": "ugk — 基于 pi 的定制化编码 agent,装即用",
+  "type": "module",
+  "bin": {
+    "ugk": "bin/ugk.js"
+  },
+  "keywords": [
+    "pi-package",
+    "cli",
+    "agent",
+    "coding-agent"
+  ],
+  "scripts": {
+    "cron:start": "node cron/service.ts",
+    "smoke:task": "node scripts/smoke-task.mjs",
+    "smoke:rpc": "node scripts/smoke-rpc.mjs",
+    "test": "node --test \"tests/*.test.ts\"",
+    "test:integration": "node --test \"tests/integration/*.test.ts\""
+  },
+  "pi": {
+    "extensions": [
+      "./extensions"
+    ],
+    "skills": [
+      "./skills"
+    ],
+    "prompts": [
+      "./prompts"
+    ],
+    "themes": [
+      "./themes"
+    ]
+  },
+  "dependencies": {
+    "@earendil-works/pi-agent-core": "0.79.4",
+    "@earendil-works/pi-ai": "0.79.4",
+    "@earendil-works/pi-coding-agent": "0.79.4",
+    "@earendil-works/pi-tui": "0.79.4",
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "fflate": "^0.8.3",
+    "node-cron": "^4.2.1"
+  }
+}

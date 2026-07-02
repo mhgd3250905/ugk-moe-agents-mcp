@@ -1,0 +1,33 @@
+# Dependencies (local resolution for extension TS imports)
+node_modules/
+mcp.json
+.mcp.local.json
+
+# Lockfile (peer-dep resolution, not a real app)
+package-lock.json
+
+# pi runtime artifacts
+.pi/
+.wrangler/
+*.log
+
+# Flow local artifacts (task runs, evidence, status — per-workspace, not shared)
+.flow/
+
+# Temp / editor
+.tmp/
+.tmp_*
+.superpowers/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local/private artifacts
+nul
+website/
+wangnuanwei-*.md
+skills/wang-nuanwei-style/
+skills/xiaoyuzhou-dl/
+skills/jianying-tts-concat/
+skills/mimo-tts/
