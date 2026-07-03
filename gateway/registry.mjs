@@ -20,7 +20,9 @@ import os from "node:os";
  * @property {string} description    — 专家用途
  * @property {string} version
  * @property {object} inputSchema    — 标准 JSON Schema(顶层 type:object)
- * @property {string[]} [requiredTools] — 受保护工具声明(如 ["chrome_cdp"])
+ * @property {string[]} [requiredTools] — 受保护工具声明(如 ["chrome_cdp"]),需用户 consent
+ * @property {string[]} [requiredEnv] — 环境变量声明(如 ["DEEPSEEK_API_KEY"]),doctor 可配
+ * @property {string[]} [requiredBinaries] — 系统可执行文件声明(如 ["yt-dlp"]),只检查不配置
  * @property {string[]} [artifacts]    — 产物文件名(如 ["x_search_results.json"])
  * @property {string} skillPath      — SKILL.md 绝对路径
  * @property {string} verifyPath     — verify.mjs 绝对路径
@@ -70,6 +72,8 @@ export async function loadExperts() {
 				version: meta.version || "0.0.0",
 				inputSchema: meta.inputSchema,
 				requiredTools: meta.requiredTools || [],
+				requiredEnv: meta.requiredEnv || [],
+				requiredBinaries: meta.requiredBinaries || [],
 				artifacts: meta.artifacts || [],
 				skillPath,
 				verifyPath,

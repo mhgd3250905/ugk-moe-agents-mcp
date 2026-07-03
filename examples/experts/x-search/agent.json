@@ -48,5 +48,7 @@
     "required": ["keyword", "timePhrase", "timeMode", "timeAmount", "timeUnit", "startIso", "endIso", "canonical"]
   },
   "requiredTools": ["chrome_cdp"],
+  "requiredEnv": ["DEEPSEEK_API_KEY"],
+  "requiredBinaries": [],
   "artifacts": ["x_search_results.json"]
 }

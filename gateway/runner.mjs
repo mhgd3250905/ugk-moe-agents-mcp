@@ -23,6 +23,7 @@ import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { runVerify } from "./verify.mjs";
 import { loadExperts, getAgentDir } from "./registry.mjs";
+import { checkRequirements, getEffectiveEnv, missingRequirementsError } from "./requirements.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PACKAGE_ROOT = path.resolve(__dirname, "..");
@@ -76,8 +77,10 @@ function getFinalOutput(messages) {
 
 /**
  * 启动专家任务。立即返回 jobId,后台 spawn + verify。
+ * 权限预检:缺权限时不 spawn(省 token),返回结构化缺失清单。
+ *
  * @param {{expert: string, input: unknown}} params
- * @returns {Promise<{jobId: string}>}
+ * @returns {Promise<{jobId: string} | {missingRequirements: import("./requirements.mjs").Requirement[]}>}
  * @throws {Error} 专家不存在
  */
 export async function startExpert({ expert, input }) {
@@ -85,6 +88,12 @@ export async function startExpert({ expert, input }) {
 	const pkg = experts.get(expert);
 	if (!pkg) {
 		throw new Error(`专家 "${expert}" 不存在。已安装:${expert.size ? [...experts.keys()].join(", ") : "(无)"}`);
+	}
+
+	// 权限门:先预检,缺了就不 spawn(省 token 省 time),直接返回结构化缺失清单
+	const { missing } = await checkRequirements(pkg);
+	if (missing.length > 0) {
+		return { missingRequirements: missing };
 	}
 
 	const jobId = newJobId();
@@ -123,16 +132,10 @@ export async function startExpert({ expert, input }) {
 async function runExpertBackground(job, pkg, input) {
 	const ugkBin = path.join(PACKAGE_ROOT, "bin", "ugk.js");
 
-	// 授权 env:专家声明的受保护工具透传给专家实例(自动放行,无交互)
-	/** @type {Record<string, string>} */
-	const authEnv = {};
-	if (pkg.requiredTools.includes("chrome_cdp")) {
-		authEnv.UGK_TASK_ALLOW_CHROME_CDP = "1";
-	}
-	const mcpTools = pkg.requiredTools.filter((t) => t.includes("__"));
-	if (mcpTools.length) {
-		authEnv.UGK_TASK_ALLOW_MCP_TOOLS = mcpTools.join(",");
-	}
+	// 授权 env:从 config.json 算出(consent 类只在用户明确同意时才注入)。
+	// 修复之前的漏洞:不再无条件注入 UGK_TASK_ALLOW_CHROME_CDP。
+	// 见 requirements.mjs getEffectiveEnv。
+	const effectiveEnv = getEffectiveEnv(pkg);
 
 	const childEnv = {
 		...process.env,
@@ -142,7 +145,7 @@ async function runExpertBackground(job, pkg, input) {
 		TASK_DIR: pkg.dir,
 		// 专家实例是 headless 受控 spawn,跳过 workspace trust 交互门
 		UGK_SKIP_WORKSPACE_TRUST: "1",
-		...authEnv,
+		...effectiveEnv,
 	};
 
 	// 专家实例的初始 prompt:激活它的 skill,告知环境变量契约。
