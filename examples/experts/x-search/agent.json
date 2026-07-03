@@ -1,0 +1,52 @@
+{
+  "name": "x-search",
+  "description": "按关键词+时间范围抓 X/Twitter Latest 推文,落地结构化 JSON。用本地已登录 Chrome(CDP)控制,按 [startIso, endIso) 双边界过滤,分块 dump 全量不截断。",
+  "version": "1.0.0",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "keyword": {
+        "type": "string",
+        "description": "X/Twitter 搜索关键词,原样用于查询 URL。不要自己加 since:/until: 或语言过滤(时间窗由 startIso/endIso 表达)。"
+      },
+      "timePhrase": {
+        "type": "string",
+        "description": "用户原始时间短语(任意语言),原样回显进输出。如 '3h'、'上周'、'last week'。"
+      },
+      "timeMode": {
+        "type": "string",
+        "enum": ["rolling", "calendar", "calendar_to_now"],
+        "description": "rolling=X ago from now;calendar=上个完整自然周期;calendar_to_now=本周期开始到现在。"
+      },
+      "timeAmount": {
+        "type": "number",
+        "description": "正数,时间数量。如 '3h'→3,'俩月'→2,'上周'→1。"
+      },
+      "timeUnit": {
+        "type": "string",
+        "enum": ["hour", "day", "week", "month"],
+        "description": "时间单位。"
+      },
+      "startIso": {
+        "type": "string",
+        "description": "窗口起 ISO 8601(含)。调用方必须算好,不要让专家猜。如 '2026-06-28T03:00:00.000Z'。"
+      },
+      "endIso": {
+        "type": "string",
+        "description": "窗口止 ISO 8601(排他=now 或周期边界)。调用方必须算好。"
+      },
+      "canonical": {
+        "type": "string",
+        "description": "短规范标签,如 '3hours'/'60days'。用最小单位。"
+      },
+      "maxSteps": {
+        "type": "number",
+        "default": 20,
+        "description": "可选。anchor-scroll 上限,默认 20。活跃话题可提到 40-80,硬上限 100。"
+      }
+    },
+    "required": ["keyword", "timePhrase", "timeMode", "timeAmount", "timeUnit", "startIso", "endIso", "canonical"]
+  },
+  "requiredTools": ["chrome_cdp"],
+  "artifacts": ["x_search_results.json"]
+}

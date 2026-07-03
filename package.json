@@ -3,10 +3,28 @@
   "version": "0.1.0",
   "description": "ugk-moe-agent — 专家 agent 集合 + MCP 网关,每个专家是一个懂一件事的独立 ugk 实例",
   "type": "module",
+  "license": "MIT",
+  "author": "ugk-moe-agent contributors",
+  "homepage": "https://github.com/mhgd3250905/ugk-moe-agents-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mhgd3250905/ugk-moe-agents-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mhgd3250905/ugk-moe-agents-mcp/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "bin": {
     "ugk": "bin/ugk.js"
   },
   "keywords": [
+    "mcp",
+    "moe",
+    "mixture-of-experts",
+    "expert-agent",
+    "agent-gateway",
     "pi-package",
     "cli",
     "agent",

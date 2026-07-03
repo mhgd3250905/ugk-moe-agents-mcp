@@ -1,0 +1,12 @@
+{
+  "name": "echo",
+  "description": "最小链路验证专家。把 input 原样写进 echo_output.json,不依赖任何外部工具。",
+  "version": "1.0.0",
+  "inputSchema": {
+    "type": "object",
+    "properties": { "message": { "type": "string", "description": "要回显的消息" } },
+    "required": ["message"]
+  },
+  "requiredTools": [],
+  "artifacts": ["echo_output.json"]
+}
