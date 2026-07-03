@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node](https://img.shields.io/badge/node-%3E%3D18-green)](https://nodejs.org)
-[![Tests](https://img.shields.io/badge/tests-323%20pass-brightgreen)](#测试)
+[![Tests](https://img.shields.io/badge/tests-245%20pass-brightgreen)](#测试)
 
 ---
 
@@ -194,10 +194,69 @@ console.log('PASS');
 
 参考样本:`examples/experts/echo/verify.mjs`(最简)、`examples/experts/x-search/verify.mjs`(真实复杂场景)。
 
+## 权限配置(doctor)
+
+专家可能需要权限才能跑——API key、本地 Chrome 控制权、系统二进制。**MCP 调用是异步的,用户不在场,不能实时弹框确认**,所以本项目把"实时确认"重新设计成"声明 → 预检 → 反馈"三段式。
+
+### 专家声明权限(在 agent.json)
+
+```json
+{
+  "requiredTools": ["chrome_cdp"],
+  "requiredEnv": ["DEEPSEEK_API_KEY"],
+  "requiredBinaries": ["yt-dlp"]
+}
+```
+
+三类权限:
+| 类型 | 字段 | 怎么满足 |
+|---|---|---|
+| **consent**(控制性) | `requiredTools` | 用户在 CLI 明确同意;MCP **拒绝**代写 |
+| **env**(配置性) | `requiredEnv` | doctor 写进 config.json,或设环境变量 |
+| **binary**(能力性) | `requiredBinaries` | 只检查 PATH 存在性 |
+
+### 配置权限(两种方式)
+
+**方式一:对话配置(小白友好)** — 让你的 agent 调 MCP `doctor` tool:
+```
+用户:帮我配好 mimo-tts
+agent:(调 doctor 查询)→ "mimo-tts 需要 MIMO_API_KEY"
+agent:你的 MIMO_API_KEY 是多少?
+用户:sk-xxx
+agent:(调 doctor apply)→ 已配置,mimo-tts 就绪
+```
+
+**方式二:CLI doctor(老手/必经之路)** — 跑 `node gateway/doctor.mjs`:
+```
+检查 2 个专家的权限...
+=== x-search ===
+  缺失:
+    [consent] chrome_cdp
+  同意让 x-search 控制 chrome_cdp? (y/n) y
+  ✓ 已写入 config.json
+```
+
+> ⚠️ **consent 类权限(如 chrome_cdp 控制)只能用方式二(CLI)**。这是安全硬边界:控制本地资源(浏览器登录态)的权限必须人亲手同意,agent 不能代写。env 类(API key)两种方式都行。
+
+### 缺权限时(运行期反馈)
+
+调 `run_expert` 时如果缺权限,网关**不 spawn 专家**(省 token),直接返回结构化缺失清单:
+```json
+{
+  "isError": true,
+  "status": "missing_requirements",
+  "missing": [
+    {"type":"consent","name":"chrome_cdp","howToFix":"运行 node gateway/doctor.mjs 同意"},
+    {"type":"env","name":"DEEPSEEK_API_KEY","howToFix":"调 doctor 配置或设环境变量"}
+  ]
+}
+```
+调用方 agent 看到 `howToFix` 能程序化处理(自己装二进制,或引导用户配置),然后重试。
+
 ## 测试
 
 ```bash
-npm test              # 全量(当前 323 pass)
+npm test              # 全量(当前 245 pass)
 node --test tests/gateway-verify.test.ts      # 单文件
 ```
 
