@@ -140,10 +140,26 @@ async function runExpertBackground(job, pkg, input) {
 		TASK_OUTPUT_DIR: job.outputDir,
 		TASK_INPUT: JSON.stringify(input),
 		TASK_DIR: pkg.dir,
+		// 专家实例是 headless 受控 spawn,跳过 workspace trust 交互门
+		UGK_SKIP_WORKSPACE_TRUST: "1",
 		...authEnv,
 	};
 
-	const args = ["--mode", "json", "-p", "--no-session"];
+	// 专家实例的初始 prompt:激活它的 skill,告知环境变量契约。
+	// skill 本身(经 UGK_ONLY_SKILL 加载,description 触发 LLM 读 SKILL.md)指导具体执行。
+	const prompt = [
+		`你是 ${pkg.name} 专家。`,
+		"环境变量已注入:",
+		"- TASK_INPUT(JSON):你的输入参数,先读它。",
+		"- TASK_OUTPUT_DIR:产物落盘目录,最终结果写到这里。",
+		"- TASK_DIR:你的专家包目录(含 scripts/ 可调用脚本)。",
+		"",
+		`先 read 你的 SKILL.md(${pkg.skillPath})了解执行方法,`,
+		"然后按 SKILL.md 的指引执行任务,把产物写到 TASK_OUTPUT_DIR。",
+		"完成后只回复一句话摘要(产物路径 + 关键统计),不要贴产物内容。",
+	].join("\n");
+
+	const args = ["--mode", "json", "-p", "--no-session", prompt];
 	const child = spawn(process.execPath, [ugkBin, ...args], {
 		env: childEnv,
 		stdio: ["ignore", "pipe", "pipe"],
