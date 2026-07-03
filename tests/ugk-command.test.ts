@@ -91,7 +91,7 @@ test("/ugk renders a structured status panel", async () => {
 		});
 
 		const text = notifications.join("\n");
-		assert.match(text, /^🟢 UGK 已启用/);
+		assert.match(text, /^🟢 UGK-MOE 已启用/);
 		assert.match(text, /┌─+┬─+┐/);
 		assert.doesNotMatch(text, /│\s*🧰 工具\s*│.*✅ greet/);
 		assert.match(text, /│\s*🧰 工具\s*│.*✅ mcp/);
@@ -99,7 +99,6 @@ test("/ugk renders a structured status panel", async () => {
 		assert.match(text, /│\s*⌨️ 命令\s*│\s*\/ugk/);
 		assert.match(text, /│\s*⌨️ 命令\s*│.*\/mcp/);
 		assert.doesNotMatch(text, /│\s*⌨️ 命令\s*│.*\/flow/);
-		assert.match(text, /│\s*📡 API\s*│\s*❌ DeepSeek 未配置/);
 		assert.match(text, /│\s*🛡️ 防护\s*│\s*危险 bash 门禁已启用/);
 		assert.doesNotMatch(text, /🧰 工具:/);
 	} finally {
@@ -203,9 +202,9 @@ test("/ui-language switches UGK UI copy without changing agent reply language", 
 
 		const text = notifications.join("\n");
 		assert.match(text, /UI language set to: English/);
-		assert.match(text, /^UI language set to: English[\s\S]*🟢 UGK enabled/);
+		assert.match(text, /^UI language set to: English[\s\S]*🟢 UGK-MOE enabled/);
 		assert.match(text, /Tools/);
-		assert.doesNotMatch(text, /UGK 已启用/);
+		assert.doesNotMatch(text, /UGK-MOE 已启用/);
 
 		const settings = JSON.parse(fs.readFileSync(path.join(agentDir, "settings.json"), "utf8"));
 		assert.equal(settings.uiLanguage, "en-US");

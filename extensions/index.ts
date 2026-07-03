@@ -19,17 +19,8 @@ import registerBuiltinToolRenderers from "./builtin-tool-render.ts";
 import registerSubagent from "./subagent.ts";
 import registerSubagentCommand from "./subagent-command.ts";
 import { discoverAgents } from "./subagent-agents.ts";
-import registerUiStatusline from "./ui-statusline.ts";
-import registerUgkBrandUi from "./ui-brand.ts";
-import registerCron from "./cron.ts";
-import registerPlanMode from "./plan-mode.ts";
-import registerTask from "./task/task.ts";
-import registerQuestionnaire from "./questionnaire.ts";
 import registerChromeCdp from "./chrome-cdp/index.ts";
-import registerDoctor from "./doctor/index.ts";
 import registerMcp from "./mcp/index.ts";
-import { registerUgkUpdate } from "./update-check.ts";
-import { getDeepSeekStatus } from "./deepseek-status.ts";
 import { renderTerminalTable } from "./terminal-table.ts";
 import { AUTOPILOT_PROMPT_SNIPPET, isAutopilotOn, setAutopilot } from "./shared/autopilot.ts";
 import { buildLanguagePromptSnippet, clearLanguage, getLanguage, setLanguage } from "./shared/language.ts";
@@ -81,31 +72,17 @@ export function suppressNaturalAtAutocomplete(current: AutocompleteProvider): Au
 	};
 }
 
-function formatDeepSeekSummary(deepseekStatus: string, language: UiLanguage): string {
-	if (/未配置|not configured/i.test(deepseekStatus)) {
-		return uiText("DeepSeek 未配置(设 DEEPSEEK_API_KEY 或运行 /login 启用)", "DeepSeek not configured (set DEEPSEEK_API_KEY or run /login)", language);
-	}
-	if (/DEEPSEEK_API_KEY/.test(deepseekStatus)) {
-		return uiText("DeepSeek 已配置(DEEPSEEK_API_KEY, deepseek-chat/默认模型可用)", "DeepSeek configured (DEEPSEEK_API_KEY, deepseek-chat/default model available)", language);
-	}
-	return uiText("DeepSeek 已配置(pi login/auth.json, deepseek-chat/默认模型可用)", "DeepSeek configured (pi login/auth.json, deepseek-chat/default model available)", language);
-}
-
-function formatUgkStatusTable(deepseekStatus: string): string {
+function formatUgkStatusTable(): string {
 	const language = getUiLanguage();
-	const apiConfigured = /已配置|configured/i.test(deepseekStatus) && !/未配置|not configured/i.test(deepseekStatus);
-	const apiIcon = apiConfigured ? "✅" : "❌";
-	const apiSummary = formatDeepSeekSummary(deepseekStatus, language);
 	const rows = [
-		[uiText("🧰 工具", "🧰 Tools", language), "✅ subagent  ✅ cron  ✅ chrome_cdp  ✅ mcp"],
-		[uiText("🤖 代理", "🤖 Agents", language), uiText("✅ @agent 提及  ✅ /implement 流水线  ✅ 隔离摘要", "✅ @agent mention  ✅ /implement pipeline  ✅ isolated summaries", language)],
-		[uiText("⌨️ 命令", "⌨️ Commands", language), "/ugk  /doctor  /update  /plan  /cdp  /mcp  /ugk-ui  /ui-language  /ugk-autopilot  /language"],
-		["📡 API", `${apiIcon} ${apiSummary}`],
+		[uiText("🧰 工具", "🧰 Tools", language), "✅ subagent  ✅ chrome_cdp  ✅ mcp"],
+		[uiText("🤖 代理", "🤖 Agents", language), uiText("✅ @agent 提及  ✅ 隔离摘要", "✅ @agent mention  ✅ isolated summaries", language)],
+		[uiText("⌨️ 命令", "⌨️ Commands", language), "/ugk  /cdp  /mcp  /ui-language  /ugk-autopilot  /language"],
 		[uiText("🛡️ 防护", "🛡️ Guardrails", language), uiText("危险 bash 门禁已启用", "Dangerous bash gate enabled", language)],
 	] as const;
 
 	return [
-		uiText("🟢 UGK 已启用", "🟢 UGK enabled", language),
+		uiText("🟢 UGK-MOE 已启用", "🟢 UGK-MOE enabled", language),
 		"",
 		renderTerminalTable(uiText(["模块", "状态"], ["Module", "Status"], language), rows),
 	].join("\n");
@@ -122,40 +99,17 @@ export default function (pi: ExtensionAPI) {
 	registerSubagent(pi);
 	registerSubagentCommand(pi);
 
-	// 1.2) UI 美化(从官方示例搬运,三处区域互不冲突)
-	//   - footer:底栏 token 统计 + git 分支 + 模型名(/footer 开关)
-	//   - statusline:底部状态条显示回合进度(●第N轮... / ✓完成)
-	//   - titlebar:agent 工作时终端标题栏转盲文 spinner
-	registerUgkBrandUi(pi);
-	registerUiStatusline(pi);
 	pi.on("session_start", async (_event, ctx) => {
 		ctx.ui.addAutocompleteProvider?.(suppressNaturalAtAutocomplete);
 	});
 
-	// 1.3) cron 定时任务(代理常驻 cron 服务的 HTTP API)
-	registerCron(pi);
-
-	// 1.3b) plan-mode:只读探索模式(/plan 切换,bash 白名单,计划提取+进度跟踪)
-	registerPlanMode(pi);
-
-	// 1.3c) questionnaire:通用多选问卷工具(让 agent 向用户提问)。原属 judge 目录,
-	// judge 删除后独立出来 —— 它是通用能力,不只 judge 用。
-	registerQuestionnaire(pi);
-
-	// 1.3b.3) task:固定任务 taskbook 创造/复用系统
-	registerTask(pi);
-
-	// 1.3c) chrome-cdp:受保护的本地登录态 Chrome 控制器(/cdp + chrome_cdp tool)
+	// chrome-cdp:受保护的本地登录态 Chrome 控制器(/cdp + chrome_cdp tool)
+	// x-search 等专家依赖此工具
 	registerChromeCdp(pi);
 
-	// 1.3c.1) mcp:外部 MCP stdio tools 集成(/mcp + session lifecycle)
+	// mcp:外部 MCP stdio tools 集成(/mcp + session lifecycle)
+	// 专家实例可连外部 MCP server
 	registerMcp(pi, { packageRoot });
-
-	// 1.3c.2) doctor: legacy entrypoint for guided environment troubleshooting skill.
-	registerDoctor(pi);
-
-	// 1.3d) UGK 自管更新:只暴露 UGK 更新,不暴露 pi update
-	registerUgkUpdate(pi);
 
 	// 1.4) @mention 手动触发:输入 @<agent名> <任务> → 改写为指示主 agent 委派的消息
 	//      agent 名从 discoverAgents 动态读(不写死),保持可配置。
@@ -184,7 +138,7 @@ export default function (pi: ExtensionAPI) {
 	pi.registerCommand("ugk", {
 		description: "Show ugk-pi-agent status",
 		handler: async (_args, ctx) => {
-			ctx.ui.notify(formatUgkStatusTable(getDeepSeekStatus()), "info");
+			ctx.ui.notify(formatUgkStatusTable(), "info");
 		},
 	});
 
