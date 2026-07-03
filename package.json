@@ -1,7 +1,7 @@
 {
-  "name": "ugk-agent",
-  "version": "2.3.0",
-  "description": "ugk — 基于 pi 的定制化编码 agent,装即用",
+  "name": "ugk-moe-agent",
+  "version": "0.1.0",
+  "description": "ugk-moe-agent — 专家 agent 集合 + MCP 网关,每个专家是一个懂一件事的独立 ugk 实例",
   "type": "module",
   "bin": {
     "ugk": "bin/ugk.js"
@@ -13,9 +13,6 @@
     "coding-agent"
   ],
   "scripts": {
-    "cron:start": "node cron/service.ts",
-    "smoke:task": "node scripts/smoke-task.mjs",
-    "smoke:rpc": "node scripts/smoke-rpc.mjs",
     "test": "node --test \"tests/*.test.ts\"",
     "test:integration": "node --test \"tests/integration/*.test.ts\""
   },
@@ -38,8 +35,6 @@
     "@earendil-works/pi-ai": "0.79.4",
     "@earendil-works/pi-coding-agent": "0.79.4",
     "@earendil-works/pi-tui": "0.79.4",
-    "@modelcontextprotocol/sdk": "1.29.0",
-    "fflate": "^0.8.3",
-    "node-cron": "^4.2.1"
+    "@modelcontextprotocol/sdk": "1.29.0"
   }
 }

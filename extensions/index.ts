@@ -386,7 +386,15 @@ export default function (pi: ExtensionAPI) {
 	//    skills = 系统自带(跟包走,更新覆盖);user-skills = 用户手动安装/创建,
 	//    同样在包目录下,跟着 git clone 走(用户在哪运行 ugk 都用同一批)。
 	//    两者用同一个 scanSkillPaths,来源统一、加载机制统一。
+	//
+	//    专家实例支持(ugk-moe-agent):命中 UGK_ONLY_SKILL 时只返回指定 skill,
+	//    用于 MCP 网关 spawn "只懂一件事" 的专家实例。env 不设时行为完全不变。
 	pi.on("resources_discover", () => {
+		const onlySkill = process.env.UGK_ONLY_SKILL?.trim();
+		if (onlySkill) {
+			const resolved = path.isAbsolute(onlySkill) ? onlySkill : path.resolve(packageRoot, onlySkill);
+			return { skillPaths: [resolved], promptPaths: [], themePaths: [] };
+		}
 		return {
 			skillPaths: [
 				...scanSkillPaths(path.join(packageRoot, "skills")),
